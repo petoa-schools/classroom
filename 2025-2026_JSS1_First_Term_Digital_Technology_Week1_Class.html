@@ -392,6 +392,7 @@
                     <img src="img/mainlogo.png" alt="School Logo">
                 </div>
             </div>
+             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
 
 <div class="class-container" id="mainContainer">
     <!-- header with logo & user (dynamic from login session) -->
@@ -609,6 +610,12 @@
 
         console.log('Class page ready. Folders: lesson_notes/, videos/ , img/');
     })();
+
+         document.getElementById('logoutBtn').addEventListener('click', function() {
+            sessionStorage.removeItem('loggedUser');
+            sessionStorage.removeItem('currentClass');
+            window.location.href = 'index.html';
+        });
 </script>
 
 <!-- hidden inline style for modal background -->
