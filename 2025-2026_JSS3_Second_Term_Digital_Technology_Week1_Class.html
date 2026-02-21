@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSS3 · Digital Technology Week1</title>
+    <!-- Font Awesome (icons) & simple PDF viewer style -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Background image with opacity 0.6 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('img/templogo1.png') no-repeat center center;
+              background-size: 300px 300px;
+            opacity: 0.1;
+            z-index: 0;
+            pointer-events: none;
+            background-color: white;
+            opacity: 0.6;
+            
+        }
+
+        /* School logo at the top */
+        .school-logo-top {
+            text-align: center;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .school-logo-top img {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: white;
+            padding: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            border: 3px solid #f5b81b;
+        }
+
+        .class-container {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 48px;
+            box-shadow: 0 30px 50px -20px rgba(0,35,65,0.4);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* header with logo & user */
+        .class-header {
+            background: rgb(50,125,50);/*#0b2f4e;*/
+            color: white;
+            padding: 1.2rem 2.5rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo-badge {
+            background: #f5b81b;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0b2f4e;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .school-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .user-greeting {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(255,255,255,0.12);
+            padding: 8px 22px 8px 18px;
+            border-radius: 60px;
+        }
+
+        .user-img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            background: #b4c8e0;
+        }
+
+        .username {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* awareness h1 */
+        .awareness-section {
+            background: #e8f0fe;
+            padding: 30px 30px 20px 30px;
+            text-align: center;
+            border-bottom: 2px dashed #9bb6d0;
+        }
+
+        .awareness-h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0a2f4a;
+            background: white;
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 80px;
+            box-shadow: 0 6px 14px rgba(0,40,70,0.15);
+            border: 1px solid #c7d9ec;
+            letter-spacing: -0.3px;
+        }
+
+        .awareness-h1 span {
+            color: #a66000;
+            font-weight: 800;
+        }
+
+        /* 3 card row */
+        .cards-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 50px 30px;
+        }
+
+        .action-card {
+            flex: 1 1 260px;
+            max-width: 330px;
+            background: white;
+            border-radius: 40px;
+            padding: 32px 22px 32px;
+            box-shadow: 0 20px 30px -8px rgba(0, 30, 60, 0.2);
+            transition: transform 0.2s ease;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.7);
+            backdrop-filter: blur(4px);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .action-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-icon {
+            font-size: 3.8rem;
+            color: #0b2f4e;
+            background: #e2edff;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #1b3a5c;
+        }
+
+        .card-description {
+            font-size: 1rem;
+            color: #2d4b6b;
+            margin-bottom: 28px;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .card-btn {
+            background: #0b2f4e;
+            color: white;
+            border: none;
+            padding: 16px 18px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            border: 1px solid #a1c0e0;
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .card-btn i {
+            font-size: 1.2rem;
+        }
+
+        .card-btn:hover {
+            background: #1f4b73;
+            box-shadow: 0 6px 14px #0b2f4e70;
+        }
+
+        .video-password-area {
+            margin-top: 30px;
+            background: #fffbf2;
+            border-radius: 60px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ffdbaf;
+            gap: 10px;
+        }
+
+        .video-password-area input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 5px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .video-password-area input::placeholder {
+            color: #7b6b58;
+        }
+
+        .small-lock-btn {
+            background: #f5b81b;
+            border: none;
+            border-radius: 40px;
+            padding: 8px 22px;
+            font-weight: 600;
+            color: #0b2f4e;
+            cursor: pointer;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .small-lock-btn:hover {
+            background: #ffcc4d;
+        }
+
+        .feedback-message {
+            margin: 0 30px 30px 30px;
+            padding: 16px 28px;
+            border-radius: 60px;
+            background: #deedff;
+            font-weight: 500;
+            color: #035388;
+            border-left: 6px solid #0b2f4e;
+        }
+
+        .footer-note {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #2a577b;
+            padding: 20px 30px;
+            border-top: 1px solid rgba(11,47,78,0.2);
+        }
+
+        /* pdf viewer modal/inline (simple) */
+        .pdf-viewer-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .pdf-viewer-content {
+            width: 90%;
+            height: 90%;
+            background: white;
+            border-radius: 40px;
+            padding: 20px;
+            box-shadow: 0 30px 60px black;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pdf-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px 20px 10px;
+        }
+
+        .pdf-viewer-header h3 {
+            font-size: 1.6rem;
+            color: #0b2f4e;
+        }
+
+        .close-viewer {
+            background: #e03e3e;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        .pdf-frame {
+            width: 100%;
+            flex: 1;
+            border: none;
+            border-radius: 24px;
+            background: #f1f1f1;
+        }
+             .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+       
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--primary-color);
+            border: 2px solid var(--secondary-color);
+        }
+          .windows-activate {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-color);
+            font-size: 14px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+       
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<!-- School logo at the top -->
+     <div class="logo-container">
+                <div class="logo">
+                    <img src="img/mainlogo.png" alt="School Logo">
+                </div>
+            </div>
+             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+
+<div class="class-container" id="mainContainer">
+    <!-- header with logo & user (dynamic from login session) -->
+    <div class="class-header" id="dynamicHeader">
+        <!-- will be filled by JS using session/localStorage, but we set default fallback -->
+        <div class="logo-badge"><i class="fas fa-flask"></i></div>
+        <div class="school-title">PETOA SCHOOLS</div>
+        <div class="user-greeting" id="userGreetingBlock">
+            <img src="img/default-avatar.png" alt="user" class="user-img" id="userImg" onerror="this.src='https://via.placeholder.com/44?text=U';">
+            <span class="username" id="userNameDisplay">Classroom</span>
+        </div>
+    </div>
+
+    <!-- H1 awareness display: class/subject/term/week/session -->
+    <div class="awareness-section">
+        <div class="awareness-h1" id="awarenessHeading">
+            <span>2025-2026</span> JSS3 · Second Term · Digital Technology · Week1
+        </div>
+    </div>
+
+    <!-- 3 cards: view pdf, download pdf, watch tutorial + video password -->
+    <div class="cards-row">
+        <!-- Card 1: view week1 PDF notes -->
+        <div class="action-card">
+            <div class="card-icon"><i class="fas fa-file-pdf"></i></div>
+            <div class="card-title">View PDF</div>
+            <div class="card-description">Open the lesson notes in your browser. No download needed – just read online.</div>
+            <button class="card-btn" id="viewPdfBtn"><i class="fas fa-eye"></i> View Week 1 notes</button>
+        </div>
+
+        <!-- Card 2: download week 1 PDF lesson notes -->
+        <div class="action-card">
+            <div class="card-icon"><i class="fas fa-download"></i></div>
+            <div class="card-title">Download PDF</div>
+            <div class="card-description">Save a copy to your device. File: <strong>2025-2026_JSS3_Second_Term_Digital_Technology_Week1_Class.pdf</strong></div>
+            <button class="card-btn" id="downloadPdfBtn"><i class="fas fa-file-arrow-down"></i> Download lesson</button>
+        </div>
+
+        <!-- Card 3: watch tutorial with password -->
+        <div class="action-card">
+            <div class="card-icon"><i class="fas fa-video"></i></div>
+            <div class="card-title">Watch tutorial</div>
+            <div class="card-description">Stream Week 1 video lesson. Password required.</div>
+            <div class="video-password-area">
+                <input type="password" id="videoPass" placeholder="video password" value="week1video">
+                <button class="small-lock-btn" id="unlockVideoBtn"><i class="fas fa-key"></i> Unlock</button>
+            </div>
+            <!-- hidden video message or actual video will appear -->
+        </div>
+    </div>
+
+    <!-- feedback / info area -->
+    <div class="feedback-message" id="globalFeedback">
+        <i class="fas fa-info-circle"></i> PETOA SCHOOLS CLASSROOM: <!--<strong>week1video</strong>-->
+    </div>
+
+    <div class="footer-note">
+         <p>&copy; 2026 petoa-schools classroom</p>
+    </div>
+</div>
+
+<!-- PDF Viewer Modal (embedded) -->
+<div class="pdf-viewer-modal" id="pdfViewerModal">
+    <div class="pdf-viewer-content">
+        <div class="pdf-viewer-header">
+            <h3><i class="fas fa-file-pdf" style="color:#d32f2f;"></i> 2025-2026 JSS3 Second Term Digital Technology Week 1</h3>
+            <button class="close-viewer" id="closePdfViewer">&times;</button>
+        </div>
+        <iframe class="pdf-frame" id="pdfViewerFrame" src="" title="PDF viewer"></iframe>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ----- Get logged-in user data from login session (from sessionStorage) -----
+        let loggedUser = {
+            username: 'Guest',
+            image: 'default-avatar.png'
+        };
+
+        // Try to load from sessionStorage (set by login.html)
+        const storedUser = sessionStorage.getItem('loggedUser');
+        if (storedUser) {
+            try {
+                loggedUser = JSON.parse(storedUser);
+                console.log('User loaded from session:', loggedUser);
+            } catch (e) {
+                console.error('Error parsing user data:', e);
+            }
+        } else {
+            console.log('No user found in sessionStorage');
+            // Optional: Redirect to login if no user found
+            // window.location.href = 'index.html';
+        }
+
+        // Update header with user info
+        const userImgElem = document.getElementById('userImg');
+        const userNameSpan = document.getElementById('userNameDisplay');
+
+        // Set image: look inside img folder, add fallback
+        if (loggedUser && loggedUser.image) {
+            userImgElem.src = `img/${loggedUser.image}`;
+        } else {
+            userImgElem.src = 'img/default-avatar.png';
+        }
+        
+        // Display username
+        if (loggedUser && loggedUser.username) {
+            userNameSpan.textContent = loggedUser.username;
+        } else {
+            userNameSpan.textContent = 'Guest';
+        }
+
+        // Get current class data from sessionStorage (set by dashboard.html)
+        const currentClassData = sessionStorage.getItem('currentClass');
+        if (currentClassData) {
+            try {
+                const classData = JSON.parse(currentClassData);
+                console.log('Class data loaded:', classData);
+                
+                // Update awareness heading with actual data
+                const awarenessElem = document.getElementById('awarenessHeading');
+                if (awarenessElem && classData) {
+                    const session = classData.session || '2025-2026';
+                    const className = classData.className || 'JSS3';
+                    const term = classData.term || 'Second_Term';
+                    const subject = classData.subject || 'Digital Technology';
+                    const week = classData.week || 'Week1';
+                    
+                    // Format term for display (replace underscore with space)
+                    const displayTerm = term.replace('_', ' ');
+                    
+                    awarenessElem.innerHTML = `<span>${session}</span> ${className} · ${displayTerm} · ${subject} · ${week.replace('Week', 'Week ')}`;
+                }
+            } catch (e) {
+                console.error('Error parsing class data:', e);
+            }
+        }
+
+        // ---------- file paths based on specification ----------
+        const basePdfPath = 'lesson_notes/2025-2026_JSS3_Second_Term_Digital_Technology_Week1_Class.pdf';
+        const baseVideoPath = 'videos/2025-2026_JSS3_Second_Term_Digital_Technology_Week1_tutorial.mp4';
+
+        // For demo purposes, we might not have real files, so we simulate feedback.
+        // In a real project, folders exist and files are present.
+
+        // ---------- CARD 1: VIEW PDF (open in modal) ----------
+        const viewBtn = document.getElementById('viewPdfBtn');
+        const modal = document.getElementById('pdfViewerModal');
+        const closeModal = document.getElementById('closePdfViewer');
+        const pdfFrame = document.getElementById('pdfViewerFrame');
+        const feedbackDiv = document.getElementById('globalFeedback');
+
+        viewBtn.addEventListener('click', function() {
+            // Try to open the pdf in the iframe
+            pdfFrame.src = basePdfPath;
+            modal.style.display = 'flex';
+            feedbackDiv.innerHTML = `<i class="fas fa-eye"></i> PDF viewer opened: ${basePdfPath}`;
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            pdfFrame.src = ''; // stop loading
+        });
+
+        // Click outside modal to close (optional)
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                pdfFrame.src = '';
+            }
+        });
+
+        // ---------- CARD 2: DOWNLOAD PDF ----------
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+        downloadBtn.addEventListener('click', function() {
+            // Create an invisible anchor and trigger download
+            const a = document.createElement('a');
+            a.href = basePdfPath;
+            a.download = '2025-2026_JSS3_Second_Term_Digital_Technology_Week1_Class.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            feedbackDiv.innerHTML = `<i class="fas fa-download"></i> Download started: ${basePdfPath} (if file exists)`;
+        });
+
+        // ---------- CARD 3: VIDEO + PASSWORD CHECK ----------
+        const unlockBtn = document.getElementById('unlockVideoBtn');
+        const videoPassInput = document.getElementById('videoPass');
+
+        // Static correct password for this specific page (week1 video)
+        const CORRECT_VIDEO_PASS = 'week1video';
+
+        unlockBtn.addEventListener('click', function() {
+            const entered = videoPassInput.value.trim();
+
+            if (entered !== CORRECT_VIDEO_PASS) {
+                feedbackDiv.innerHTML = `<i class="fas fa-exclamation-triangle" style="color:#b53b3b;"></i> Incorrect video password. Try again. (hint: week1video)`;
+                return;
+            }
+
+            // Password correct -> open video in new tab
+            const videoFile = 'videos/2025-2026_JSS3_Second_Term_Digital_Technology_Week1_tutorial.mp4';
+            window.open(videoFile, '_blank');
+            feedbackDiv.innerHTML = `<i class="fas fa-check-circle"></i> Correct! Video should open in new tab: ${videoFile}`;
+        });
+
+        // Prefill password hint
+        videoPassInput.value = 'week1video';
+
+        // Handle enter on password field
+        videoPassInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlockBtn.click();
+        });
+
+        console.log('Class page ready. Folders: lesson_notes/, videos/ , img/');
+    })();
+
+          document.getElementById('logoutBtn').addEventListener('click', function() {
+            sessionStorage.removeItem('loggedUser');
+            sessionStorage.removeItem('currentClass');
+            window.location.href = 'index.html';
+        });
+
+         // ================== ANTI-CHEAT & LOGOUT ==================
+        document.addEventListener('keydown', function (event) {
+            const key = event.key.toLowerCase();
+            if ((event.ctrlKey && (key === 'p' || key === 's')) && currentSection === 'objectives') {
+                event.preventDefault();
+                alert("Right-click and view source are disabled during classroom .");
+                return false;
+            }
+        });
+       
+        document.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            alert("Right-click is disabled during classroom .");
+        });
+       
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                alert("Developer tools are disabled during classroom .");
+            }
+        });
+</script>
+
+<!-- hidden inline style for modal background -->
+</body>
+</html>
